@@ -55,6 +55,7 @@ nav button i{font-style:normal;font-size:22px;transition:transform .2s}nav butto
 .tg{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;vertical-align:1px}.tg.b{background:var(--oks);color:var(--ok)}.tg.t{background:var(--warns);color:var(--warn)}
 .ad{margin-top:6px}.ad summary{font-size:13px;color:var(--acc);font-weight:600;cursor:pointer;min-height:32px;display:flex;align-items:center}.ad .act{flex:none;margin-top:6px;font-weight:400}
 .note{margin:0 4px 10px;padding:10px 12px;border-radius:12px;background:var(--accs);font-size:13px}
+.mb{margin-bottom:10px}.ml{display:flex;justify-content:space-between;gap:8px;font-size:14px;padding:4px 0}.me{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.me:last-child{border:0}.lnk{border:0;background:none;color:var(--acc);font-weight:600;padding:6px 0;font-size:13px}select.t{appearance:auto}.stats .stat{flex:1 1 28%}
 </style></head><body>
 <header class="hero"><div><small>New Zealand road trip</small><h1>13–29 Nov 2026</h1><p>Mozammel · Sonia · Atif · Mahnisa — about 2,950 km</p></div></header>
 <main>
@@ -63,6 +64,13 @@ nav button i{font-style:normal;font-size:22px;transition:transform .2s}nav butto
 <section class="view" id="v-map"><h2>Route map</h2><div id="map"></div><div class="card fallback" id="mapfb"><b>Map needs a connection.</b><div class="sub">Stops in order:</div><div id="fblist"></div></div><p class="sub" style="padding:0 4px">Solid line: driving. Dashed: Interislander ferry. Tap a pin for dates and stay.</p></section>
 <section class="view" id="v-check"><h2>Checklist</h2><div class="card"><div><b id="left"></b></div><div class="bar"><i id="prog"></i></div><div id="ticks"></div><button class="btn ghost sm" id="clr" style="margin-top:10px">Clear ticks</button><div class="sub" style="margin-top:8px">Saved on this phone.</div></div>
 <h2>Party</h2><div class="card"><div class="kv"><b>Mozammel</b> <span>· driving</span></div><div class="kv"><b>Sonia</b></div><div class="kv"><b>Atif</b> <span>· 17 · SkyWalk needs consent</span></div><div class="kv"><b>Mahnisa</b> <span>· 6 · 110 cm · OK: jet boats, Skyline luge · Too short: Swoop (115 cm), hydroslides (120 cm)</span></div><div class="kv"><b>Nigar</b> <span>· stays in Auckland</span></div><div class="kv" style="margin-top:8px"><b>Car</b> <span>· friend's car, 5 m long · rego to confirm</span></div></div></section>
+<section class="view" id="v-money"><h2>Money</h2><div class="card"><div class="stats" id="m-tot"></div><label class="f">Exchange rate: 1 NZD = <input class="t" id="m-rate" type="number" step="0.01" inputmode="decimal" style="width:110px;display:inline-block"> AUD (default 0.90, edit to today's rate)</label></div>
+<div class="card" id="m-form"><h3 style="margin:0">Add expense</h3><label class="f">Date<input class="t" id="m-date" type="date"></label><label class="f">Category<select class="t" id="m-cat-in"></select></label>
+<div class="row"><label class="f" style="flex:2">Amount<input class="t" id="m-amt" type="number" step="0.01" inputmode="decimal"></label><label class="f" style="flex:1">Currency<select class="t" id="m-cur"><option>NZD</option><option>AUD</option></select></label></div>
+<label class="f">Note<input class="t" id="m-note"></label><label class="f">Receipt photo<input class="t" id="m-photo" type="file" accept="image/*" capture="environment"></label><button class="btn full" id="m-save" style="margin-top:14px">Add expense</button></div>
+<h2>By category</h2><div class="card" id="m-cat"></div><h2>By day</h2><div class="card" id="m-day"></div>
+<h2>All spend</h2><div class="card" id="m-list"></div><button class="btn ghost full" id="m-csv">Export CSV</button>
+<div id="m-view" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center"><img id="m-img" style="max-width:95%;max-height:90%"></div></section>
 <section class="view" id="v-refs"><h2>My refs</h2><div class="card"><div class="sub">Type your booking refs here. They stay on this phone only and are never uploaded.</div>
 <label class="f">Air NZ booking ref<input class="t" data-r="airnz" autocapitalize="characters"></label>
 <label class="f">Interislander booking number<input class="t" data-r="ferry" inputmode="numeric"></label>
@@ -71,8 +79,8 @@ nav button i{font-style:normal;font-size:22px;transition:transform .2s}nav butto
 <label class="f">Car rego<input class="t" data-r="rego" autocapitalize="characters"></label>
 <label class="f">Other notes<textarea rows="4" data-r="notes"></textarea></label><div class="sub" id="saved" style="margin-top:8px"></div></div></section>
 </main>
-<nav><button class="on" data-v="timeline"><i>🗓️</i>Timeline</button><button data-v="bookings"><i>🎫</i>Bookings</button><button data-v="map"><i>🗺️</i>Map</button><button data-v="check"><i>✅</i>Checklist</button><button data-v="refs"><i>🔑</i>Refs</button></nav>
-<script src="data.js"></script><script src="leaflet.js"></script>
+<nav><button class="on" data-v="timeline"><i>🗓️</i>Timeline</button><button data-v="bookings"><i>🎫</i>Bookings</button><button data-v="map"><i>🗺️</i>Map</button><button data-v="check"><i>✅</i>Checklist</button><button data-v="money"><i>💰</i>Money</button><button data-v="refs"><i>🔑</i>Refs</button></nav>
+<script src="data.js"></script><script src="leaflet.js"></script><script src="money.js"></script>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
@@ -99,5 +107,6 @@ ROUTE.forEach(([a,b,f])=>L.polyline([S[a].ll,S[b].ll],{color:f?"#0891b2":ac,weig
 const seen={};STOPS.forEach((s,i)=>{const k=s.ll.join();const off=seen[k]?0.04:0;seen[k]=1;L.circleMarker([s.ll[0]-off,s.ll[1]+off],{radius:9,color:"#fff",weight:2,fillColor:s.st==="warn"?"#d97706":ac,fillOpacity:1}).addTo(map).bindPopup(`<div class="pp"><b>${i+1}. ${esc(s.name)}</b>${s.dates}<br>${esc(s.stay)}</div>`)});
 map.fitBounds(STOPS.map(s=>s.ll),{padding:[24,24]})}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.view").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#v-"+b.dataset.v).classList.add("on");scrollTo({top:0,behavior:"smooth"});if(b.dataset.v==="map")setTimeout(()=>{initMap();map&&map.invalidateSize()},60)});
+try{initMoney()}catch(e){console.error(e)}
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
 </script></body></html>
