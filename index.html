@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b3d2e"><link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NZ Trip"><title>NZ Trip · 13–29 Nov 2026</title>
+<style>
+:root{--bg:#f5f7f6;--card:#fff;--ink:#14201b;--sub:#5b6b64;--line:#dde4e0;--acc:#0b3d2e;--ok:#1a7f4b;--warn:#b25e00}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1412;--card:#18211d;--ink:#e8efeb;--sub:#9aaba3;--line:#2a3631;--acc:#5fc39a}}
+*{box-sizing:border-box}body{margin:0;font:17px/1.45 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:84px}
+header{background:#0b3d2e;color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 14px}header h1{margin:0;font-size:20px}header p{margin:2px 0 0;opacity:.8;font-size:14px}
+main{padding:12px;max-width:640px;margin:auto}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+h2{font-size:17px;margin:4px 0 10px}.today{border:2px solid var(--acc)}.muted{color:var(--sub);font-size:14px}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px}details.now{border:2px solid var(--acc)}
+summary{list-style:none;padding:14px;min-height:56px;display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;font-weight:600}
+summary::-webkit-details-marker{display:none}.pill{font-size:12px;font-weight:600;padding:3px 8px;border-radius:99px;white-space:nowrap;border:1px solid currentColor}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.acc{color:var(--acc)}details ul{margin:0;padding:0 14px 6px 32px}
+a.map{display:block;margin:8px 14px 14px;padding:14px;border-radius:12px;background:var(--acc);color:#fff;text-decoration:none;font-weight:600;text-align:center}
+@media(prefers-color-scheme:dark){a.map{color:#0e1412}}
+.tick{display:flex;gap:14px;align-items:center;min-height:56px;border-bottom:1px solid var(--line);cursor:pointer}.tick input{width:26px;height:26px;accent-color:var(--acc)}
+.tick.done span{text-decoration:line-through;color:var(--sub)}dl{margin:0}dt{color:var(--sub);font-size:14px;margin-top:10px}dd{margin:0}
+label.f{display:block;margin-top:12px;font-size:14px;color:var(--sub)}input.t,textarea{width:100%;font-size:17px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+button{font-size:16px;padding:12px 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);margin-top:12px}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;margin:0;border:0;border-radius:0;padding:14px 4px;font-size:14px;background:none;min-height:60px}nav button.on{color:var(--acc);font-weight:700}
+.view{display:none}.view.on{display:block}
+</style></head><body>
+<header><h1>NZ Trip · 13–29 Nov 2026</h1><p>Road trip plan, drives, ferries and checklist</p></header>
+<main>
+<section class="view on" id="v-plan"><div class="card today" id="today"></div><h2>Day by day</h2><p class="muted">Distances and times are approximate. Total driving about 2,950 km.</p><div id="days"></div></section>
+<section class="view" id="v-check"><div class="card"><h2>Checklist · <span id="left"></span> left</h2><div id="ticks"></div><button id="clr">Clear ticks</button><p class="muted">Saved on this phone.</p></div></section>
+<section class="view" id="v-info"><div class="card"><h2>Key numbers</h2><dl>
+<dt>Outbound flight</dt><dd>Air NZ NZ126, Fri 13 Nov, MEL 7:10pm → AKL 12:50am Sat 14 Nov</dd>
+<dt>Return flight</dt><dd>Air NZ NZ121, Sun 29 Nov, departs AKL 8:55am</dd><dt>Bags</dt><dd>23 kg</dd>
+<dt>Ferry 19 Nov</dt><dd>Interislander Wellington → Picton, check-in 7:30am, departs 8:30am</dd>
+<dt>Ferry 25 Nov</dt><dd>Interislander Picton → Wellington, check-in 1pm, departs 2pm</dd>
+<dt>Ferry ship and fare</dt><dd>Kaitaki, Refundable Family fare, NZ$1,197.60 paid</dd>
+<dt>Car</dt><dd>Friend's car, 5 m long; rego to confirm</dd><dt>Booking refs</dt><dd>See the My refs tab</dd></dl></div>
+<div class="card"><h2>Party</h2><dl><dt>Mozammel</dt><dd>Driving</dd><dt>Sonia</dt><dd>&nbsp;</dd><dt>Atif (17)</dt><dd>SkyWalk needs consent</dd>
+<dt>Mahnisa (6, 110 cm)</dt><dd>OK: jet boats, Skyline luge. Too short: Swoop (115 cm), hydroslides (120 cm)</dd><dt>Nigar</dt><dd>Stays in Auckland</dd></dl></div></section>
+<section class="view" id="v-refs"><div class="card"><h2>My refs</h2><p class="muted">Type your booking refs here. They stay on this phone only and are never uploaded.</p>
+<label class="f">Air NZ booking ref<input class="t" data-k="airnz" autocapitalize="characters"></label>
+<label class="f">Interislander booking number<input class="t" data-k="ferry" inputmode="numeric"></label>
+<label class="f">Car rego<input class="t" data-k="rego" autocapitalize="characters"></label>
+<label class="f">Other notes<textarea rows="5" data-k="notes"></textarea></label><p class="muted" id="saved"></p></div></section>
+</main>
+<nav><button class="on" data-v="plan">Plan</button><button data-v="check">Checklist</button><button data-v="info">Info</button><button data-v="refs">My refs</button></nav>
+<script>
+const M=(a,b)=>"https://www.google.com/maps/dir/?api=1&origin="+encodeURIComponent(a+", New Zealand")+"&destination="+encodeURIComponent(b+", New Zealand")+"&travelmode=driving";
+const D=[
+["13–15 Nov","Auckland",["2026-11-13","2026-11-14","2026-11-15"],"Friend's place","ok",["Fri 13 Nov: NZ126 departs MEL 7:10pm, lands AKL 12:50am Sat 14 Nov","Staying at a friend's place","Sun 15 Nov: optional Sky Tower SkyWalk (Atif needs consent), to confirm"],null],
+["16–17 Nov","Rotorua",["2026-11-16","2026-11-17"],"Confirmed","ok",["Mon 16 Nov: drive Auckland → Rotorua","Airbnb 'Gateway to Adventure' (16–18 Nov)"],["Auckland","Rotorua","230 km","3h"]],
+["18 Nov","Wellington (Porirua)",["2026-11-18"],"Confirmed","ok",["Drive Rotorua → Wellington, longest North Island day","Willowglenn Cottage, Porirua"],["Rotorua","Porirua","460 km","5.5h"]],
+["19 Nov","Ferry, then Kaikōura",["2026-11-19"],"Confirmed","ok",["Interislander Wellington → Picton: check-in 7:30am, departs 8:30am","Drive Picton → Kaikōura","Coastal getaway Airbnb"],["Picton","Kaikoura","155 km","2h"]],
+["20 Nov","Pleasant Point / Tekapo area",["2026-11-20"],"Confirmed","ok",["Drive Kaikōura → Pleasant Point","Studio stay"],["Kaikoura","Pleasant Point","340 km","4h"]],
+["21–23 Nov","Queenstown (Jacks Point)",["2026-11-21","2026-11-22","2026-11-23"],"Confirmed","ok",["Sat 21 Nov: drive to Jacks Point","Remarkable Stay2 (21–24 Nov), free cancellation before 16 Nov","Ask the host about parking (5 m car)"],["Pleasant Point","Jacks Point","300 km","4h"]],
+["24 Nov","Christchurch",["2026-11-24"],"Confirmed","ok",["Drive to Christchurch, the longest day","Valley Escape"],["Jacks Point","Christchurch","480 km","6h"]],
+["25 Nov","Ferry, then Wellington",["2026-11-25"],"Stay to book","warn",["Leave Christchurch by 8am","Interislander Picton → Wellington: check-in 1pm, departs 2pm","Wellington stay: to book"],["Christchurch","Picton","335 km","4.5h"]],
+["26 Nov","Taupō",["2026-11-26"],"Stay to book","warn",["Drive Wellington → Taupō","Taupō stay: to book"],["Wellington","Taupo","375 km","4.5h"]],
+["27–29 Nov","Auckland",["2026-11-27","2026-11-28","2026-11-29"],"Stay to book","warn",["Fri 27 Nov: drive Taupō → Auckland","Auckland Airbnb near Shahriar (27–29 Nov): to book","Sun 29 Nov: NZ121 departs AKL 8:55am"],["Taupo","Auckland","280 km","3.5h"]]];
+const T=[["wlg","Book Wellington stay (25 Nov)"],["tpo","Book Taupō stay (26 Nov)"],["akl","Book Auckland Airbnb near Shahriar (27–29 Nov)"],["rego","Get the car rego from the friend"],["park","Confirm parking with the Jacks Point host"],["sky","Decide on the Sky Tower SkyWalk (Atif consent)"]];
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const n=new Date(),p=x=>String(x).padStart(2,"0"),today=n.getFullYear()+"-"+p(n.getMonth()+1)+"-"+p(n.getDate());
+const td=D.find(d=>d[2].includes(today)),esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+document.getElementById("today").innerHTML=td?`<h2>Today · ${td[0]} · ${esc(td[1])}</h2><ul>${td[5].map(i=>`<li>${esc(i)}</li>`).join("")}</ul>${td[6]?`<a class="map" style="margin:8px 0 0" href="${M(td[6][0],td[6][1])}">Directions: ${td[6][0]} → ${td[6][1]} (about ${td[6][2]}, ${td[6][3]})</a>`:""}`:`<h2>Today</h2><p>${today<"2026-11-13"?"Trip starts Fri 13 Nov with NZ126 from Melbourne at 7:10pm.":"Trip finished on 29 Nov."}</p>`;
+document.getElementById("days").innerHTML=D.map(d=>{const now=d===td;return `<details class="${now?"now":""}"${now?" open":""}><summary><span>${now?"Today · ":""}${d[0]} · ${esc(d[1])}</span><span class="pill ${now?"acc":d[4]}">${now?"Today":d[3]}</span></summary><ul>${d[5].map(i=>`<li>${esc(i)}</li>`).join("")}</ul>${d[6]?`<a class="map" href="${M(d[6][0],d[6][1])}">Directions: ${d[6][0]} → ${d[6][1]} · about ${d[6][2]}, ${d[6][3]}</a>`:"<div style='height:8px'></div>"}</details>`}).join("");
+function rt(){const s=ls.get("nz-check",{});document.getElementById("ticks").innerHTML=T.map(([k,t])=>`<label class="tick ${s[k]?"done":""}"><input type="checkbox" data-k="${k}" ${s[k]?"checked":""}><span>${t}</span></label>`).join("");document.getElementById("left").textContent=T.filter(([k])=>!s[k]).length}
+document.getElementById("ticks").addEventListener("change",e=>{const s=ls.get("nz-check",{});s[e.target.dataset.k]=e.target.checked;ls.set("nz-check",s);rt()});
+document.getElementById("clr").onclick=()=>{ls.set("nz-check",{});rt()};rt();
+const R=ls.get("nz-refs",{});document.querySelectorAll("[data-k]").forEach(el=>{if(el.closest("#v-refs")){el.value=R[el.dataset.k]||"";el.addEventListener("input",()=>{const r=ls.get("nz-refs",{});r[el.dataset.k]=el.value;ls.set("nz-refs",r);document.getElementById("saved").textContent="Saved on this phone."})}});
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.view").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.getElementById("v-"+b.dataset.v).classList.add("on");scrollTo(0,0)});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");
+</script></body></html>
