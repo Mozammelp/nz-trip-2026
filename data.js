@@ -3,6 +3,7 @@ const DIR=(a,b)=>"https://www.google.com/maps/dir/?api=1&origin="+encodeURICompo
 const AB=id=>"https://www.airbnb.com/rooms/"+id;
 const STOPS=[
 {id:"akl",name:"Auckland",ll:[-36.85,174.76],dates:"13–16 Nov",stay:"Friend's place",st:"ok"},
+{id:"hob",name:"Hobbiton Movie Set (Matamata)",ll:[-37.86,175.68],dates:"16 Nov · 11:20am tour",stay:"Tour booked",st:"ok"},
 {id:"rot",name:"Rotorua",ll:[-38.14,176.25],dates:"16–18 Nov",stay:"Gateway to Adventure · Confirmed",st:"ok"},
 {id:"wlg",name:"Wellington / Porirua",ll:[-41.13,174.84],dates:"18–19 Nov",stay:"Willowglenn Cottage · Confirmed",st:"ok"},
 {id:"pic",name:"Picton",ll:[-41.29,174.01],dates:"19 & 25 Nov",stay:"Ferry terminal",st:"ok"},
@@ -13,9 +14,11 @@ const STOPS=[
 {id:"wlg2",name:"Wellington",ll:[-41.29,174.78],dates:"25–26 Nov",stay:"To book",st:"warn"},
 {id:"tpo",name:"Taupō",ll:[-38.69,176.07],dates:"26–27 Nov",stay:"To book",st:"warn"},
 {id:"akl2",name:"Auckland",ll:[-36.85,174.76],dates:"27–29 Nov",stay:"To book (near Shahriar)",st:"warn"}];
-const ROUTE=[["akl","rot"],["rot","wlg"],["wlg","pic",1],["pic","kai"],["kai","tek"],["tek","zqn"],["zqn","chc"],["chc","pic"],["pic","wlg2",1],["wlg2","tpo"],["tpo","akl2"]];
+const ROUTE=[["akl","hob"],["hob","rot"],["rot","wlg"],["wlg","pic",1],["pic","kai"],["kai","tek"],["tek","zqn"],["zqn","chc"],["chc","pic"],["pic","wlg2",1],["wlg2","tpo"],["tpo","akl2"]];
 const CS="Check site";
+const DIR3=(a,v,b)=>DIR(a,b)+"&waypoints="+encodeURIComponent(v);
 const ACT={
+hob:{t:"Hobbiton Movie Set · Booked",d:"Guided Signature tour of the Shire film set. Booked: Mon 16 Nov, 11:20am departure from The Shire's Rest (check in by 11:00am). 2 adults, 1 youth, 1 child; NZ$325 paid.",h:"Tour 11:20am",p:"NZ$325 paid",u:"About 2.5 h (per booking)",k:"Kid-friendly; Mahnisa free (0–10)",w:"https://www.hobbitontours.com/",m:"The Shires Rest Hobbiton Matamata"},
 sky:{t:"Sky Tower & SkyWalk",d:"Auckland's 328 m tower with a lookout; SkyWalk is an optional guided walk around the outside ledge. Atif needs consent.",h:CS,p:CS,u:"Allow 1–2 h (estimate)",k:"Lookout fine for all; check SkyWalk age/height rules on site",w:"https://skycityauckland.co.nz/sky-tower/",m:"Sky Tower Auckland"},
 luge:{t:"Skyline Rotorua gondola & luge",d:"Gondola up Mt Ngongotahā, then luge tracks back down.",h:CS,p:CS,u:"Allow 2–3 h (estimate)",k:"Luge OK for Mahnisa (110 cm). Swoop NOT OK (115 cm min)",w:"https://rotorua.skyline.co.nz/",m:"Skyline Rotorua"},
 kjet:{t:"KJet Rotorua jet boat",d:"Jet boat ride on Lake Rotorua and the Ohau Channel.",h:CS,p:CS,u:"Check site",k:"Jet boat OK for Mahnisa (110 cm)",w:"https://www.kjet.co.nz/",m:"KJet Rotorua"},
@@ -40,7 +43,7 @@ crat:{t:"Craters of the Moon",d:"Geothermal walk among steaming craters.",h:CS,p
 const DAYS=[
 {d:["2026-11-13"],l:"Fri 13 Nov",p:"Melbourne → Auckland",ev:[["7:10pm","Flight NZ126 MEL → AKL (lands 12:50am Sat)","flight"]],a:[]},
 {d:["2026-11-14","2026-11-15"],l:"Sat 14 – Sun 15 Nov",p:"Auckland",ev:[["All day","Rest at a friend's place"],["15 Nov","Optional Sky Tower SkyWalk (to confirm)"]],a:["sky"]},
-{d:["2026-11-16","2026-11-17"],l:"Mon 16 – Tue 17 Nov",p:"Rotorua",leg:["Auckland","Rotorua",230,"3h"],ev:[["Morning","Drive Auckland → Rotorua"],["Check-in","Gateway to Adventure","stay"]],a:["luge","kjet","tepuia","whaka","red","hydro"]},
+{d:["2026-11-16","2026-11-17"],l:"Mon 16 – Tue 17 Nov",p:"Hobbiton → Rotorua",leg:["Auckland","Rotorua",230,"3h"],via:"Hobbiton Movie Set, Matamata",rem:"Leave Auckland by about 8:30am: check in at The Shire's Rest by 11:00am",ev:[["~8:30am","Drive Auckland → Hobbiton (about 2h)"],["11:00am","Check in at The Shire's Rest","flight"],["11:20am","Hobbiton tour (about 2.5h) · Booked","flight"],["~2:00pm","Drive Hobbiton → Rotorua (about 1h)"],["Check-in","Gateway to Adventure","stay"]],a:["hob","luge","kjet","tepuia","whaka","red","hydro"]},
 {d:["2026-11-18"],l:"Wed 18 Nov",p:"Wellington (Porirua)",leg:["Rotorua","Porirua",460,"5.5h"],ev:[["Early","Longest North Island drive"],["Check-in","Willowglenn Cottage","stay"]],a:["tepapa","cable"]},
 {d:["2026-11-19"],l:"Thu 19 Nov",p:"Ferry → Kaikōura",leg:["Picton","Kaikoura",155,"2h"],rem:"Be at the Interislander terminal by 7:30am",ev:[["7:30am","Ferry check-in, Wellington","ferry"],["8:30am","Interislander departs to Picton","ferry"],["Afternoon","Drive Picton → Kaikōura"],["Check-in","Coastal getaway","stay"]],a:["seal","whale"]},
 {d:["2026-11-20"],l:"Fri 20 Nov",p:"Pleasant Point / Tekapo",leg:["Kaikoura","Pleasant Point",340,"4h"],ev:[["Morning","Drive Kaikōura → Pleasant Point"],["Check-in","Studio","stay"]],a:["church","springs"]},
@@ -53,6 +56,7 @@ const DAYS=[
 const BOOK=[
 {k:"flight",ic:"✈️",t:"Air NZ flights",s:"Booked",st:"ok",lines:["NZ126 Fri 13 Nov · MEL 7:10pm → AKL 12:50am","NZ121 Sun 29 Nov · AKL 8:55am","23 kg bags · ref in Refs tab"],btn:[["Open booking","https://www.airnewzealand.com.au/manage-bookings"]]},
 {k:"ferry",ic:"⛴️",t:"Interislander ferry",s:"Booked · Paid NZ$1,197.60",st:"ok",lines:["Thu 19 Nov · Wellington → Picton · check-in 7:30am, departs 8:30am","Wed 25 Nov · Picton → Wellington · check-in 1pm, departs 2pm","Kaitaki · Refundable Family fare · car rego to confirm"],btn:[["Open booking","https://www.interislander.co.nz/book/manage-your-booking"]]},
+{k:"ferry",ic:"🧙",t:"Hobbiton Movie Set tour",s:"Booked · Paid NZ$325",st:"ok",lines:["Mon 16 Nov · 11:20am Signature departure","Check in at The Shire's Rest by 11:00am · about 2.5h","2 adults, 1 youth, 1 child · ref in Refs tab"],btn:[["Open booking","https://www.hobbitontours.com/"],["Maps",G("The Shires Rest Hobbiton Matamata")]]},
 {k:"stay",ic:"🏡",t:"Gateway to Adventure, Rotorua",s:"Confirmed",st:"ok",lines:["16–18 Nov · 2 nights"],btn:[["Open booking","https://www.airbnb.com/trips"],["Listing",AB("1409036366336798455")]]},
 {k:"stay",ic:"🏡",t:"Willowglenn Cottage, Porirua",s:"Confirmed",st:"ok",lines:["18–19 Nov · 1 night"],btn:[["Open booking","https://www.airbnb.com/trips"],["Listing",AB("35468258")]]},
 {k:"stay",ic:"🌊",t:"Coastal getaway, Kaikōura",s:"Confirmed",st:"ok",lines:["19–20 Nov · 1 night"],btn:[["Open booking","https://www.airbnb.com/trips"],["Listing",AB("1765014812173523087")]]},
@@ -62,4 +66,4 @@ const BOOK=[
 {k:"todo",ic:"🛏️",t:"Wellington stay",s:"To book",st:"warn",lines:["25–26 Nov · 1 night"],btn:[]},
 {k:"todo",ic:"🛏️",t:"Taupō stay",s:"To book",st:"warn",lines:["26–27 Nov · 1 night"],btn:[]},
 {k:"todo",ic:"🛏️",t:"Auckland Airbnb near Shahriar",s:"To book",st:"warn",lines:["27–29 Nov · 2 nights"],btn:[]}];
-const TODO=[["wlg","Book Wellington stay (25 Nov)"],["tpo","Book Taupō stay (26 Nov)"],["akl","Book Auckland Airbnb near Shahriar (27–29 Nov)"],["rego","Get the car rego from the friend"],["park","Confirm parking with the Jacks Point host"],["sky","Decide on the Sky Tower SkyWalk (Atif consent)"]];
+const TODO=[["hob","Hobbiton tickets: booked (16 Nov, 11:20am)",1],["wlg","Book Wellington stay (25 Nov)"],["tpo","Book Taupō stay (26 Nov)"],["akl","Book Auckland Airbnb near Shahriar (27–29 Nov)"],["rego","Get the car rego from the friend"],["park","Confirm parking with the Jacks Point host"],["sky","Decide on the Sky Tower SkyWalk (Atif consent)"]];
