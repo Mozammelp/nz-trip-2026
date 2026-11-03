@@ -9,11 +9,29 @@
 @media(prefers-color-scheme:dark){:root{--bg:#0b0f14;--card:#151b23;--ink:#eef2f6;--sub:#98a2b3;--line:#263040;--acc:#2dd4bf;--accs:#123b37;--ok:#47cd89;--oks:#10301f;--warn:#fdb022;--warns:#3a2a0b;--sh:none}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",Roboto,system-ui,sans-serif;background:var(--bg);color:var(--ink);padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-.hero{position:relative;height:240px;background:url(hero.jpg) center/cover;color:#fff;display:flex;align-items:flex-end}
-.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.65))}
+.hero{position:relative;height:calc(260px + env(safe-area-inset-top));background:#0f5c4a url(img/hero.webp) center 60%/cover;color:#fff;display:flex;align-items:flex-end}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,20,30,.25) 0%,rgba(0,0,0,0) 35%,rgba(0,15,25,.78))}.hero h1,.hero p,.hero small{text-shadow:0 1px 8px rgba(0,0,0,.5)}
 .hero div{position:relative;z-index:1;padding:0 20px 18px}.hero small{opacity:.85;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
 .hero h1{margin:2px 0 4px;font-size:28px;letter-spacing:-.02em}.hero p{margin:0;opacity:.9;font-size:14px}
-main{max-width:640px;margin:-18px auto 0;position:relative;z-index:2;padding:0 14px}
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+main{margin:-18px auto 0;position:relative;z-index:2;padding:0 14px calc(90px + env(safe-area-inset-bottom));container-type:inline-size}
+.ph{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin-bottom:8px;background:var(--line)}
+.dimg{display:block;width:calc(100% + 32px);margin:-16px -16px 12px;height:110px;object-fit:cover;border-radius:18px 18px 0 0;background:var(--line)}
+#pane{display:none}.cred{font-size:12px;color:var(--sub)}.cred a{color:var(--sub)}
+@media (min-width:840px){
+ .hero{height:calc(220px + env(safe-area-inset-top))}
+ main{padding:0 24px calc(90px + env(safe-area-inset-bottom))}
+ #v-timeline.on{display:grid;grid-template-columns:minmax(320px,38%) 1fr;gap:20px;align-items:start}
+ #v-timeline>.left{min-width:0}#pane{display:block;position:sticky;top:12px;max-height:calc(100vh - 100px);overflow:auto;min-width:0}
+ #v-timeline .day .body{display:none}#v-timeline .day.sel>.card{outline:2px solid var(--acc)}#v-timeline .dimg{height:70px}
+ #pmap{height:260px;border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-top:12px}
+ #books,#m-grid,.eatgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}#books .bk{margin:0}
+ #v-check.on,#v-refs.on{max-width:none}#map{height:70vh}
+ .acts .act{flex-basis:46%}
+ #v-money.on{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:0 16px;align-items:start}#v-money>h2,#v-money>.card:first-of-type{grid-column:1/-1}
+ #v-check.on,#v-refs.on{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start}#v-check>h2,#v-refs>h2{display:none}
+}
+@container (min-width:1100px){#books{grid-template-columns:repeat(3,1fr)}}
 .view{display:none;animation:fade .28s ease}.view.on{display:block}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .card{background:var(--card);border-radius:18px;padding:16px;margin-bottom:12px;box-shadow:var(--sh);border:1px solid var(--line)}
 h2{font-size:20px;margin:18px 4px 10px;letter-spacing:-.01em}.sub{color:var(--sub);font-size:13px}
@@ -60,7 +78,7 @@ nav button i{font-style:normal;font-size:22px;transition:transform .2s}nav butto
 </style></head><body>
 <header class="hero"><div><small>New Zealand road trip</small><h1>13–29 Nov 2026</h1><p>Mozammel · Sonia · Atif · Mahnisa — about 2,950 km</p></div></header>
 <main>
-<section class="view on" id="v-timeline"><div id="today"></div><h2>Day by day</h2><div class="note">Times are suggested, family-pace plans, not bookings. Only items tagged <b>Booked</b> are fixed: flights, ferries and Hobbiton. Drive times from OSRM road routing, plus stops.</div><div id="days"></div><p class="sub" style="padding:0 4px">Drive distances and times are approximate. Activities are optional unless tagged Booked. Prices: check the official site.</p></section>
+<section class="view on" id="v-timeline"><div class="left"><div id="today"></div><h2>Day by day</h2><div class="note">Times are suggested, family-pace plans, not bookings. Only items tagged <b>Booked</b> are fixed: flights, ferries and Hobbiton. Drive times from OSRM road routing, plus stops.</div><div id="days"></div><p class="sub" style="padding:0 4px">Drive distances and times are approximate. Activities are optional unless tagged Booked. Prices: check the official site.</p></div><aside id="pane" class="card"></aside></section>
 <section class="view" id="v-bookings"><h2>Bookings</h2><div id="books"></div></section>
 <section class="view" id="v-map"><h2>Route map</h2><div id="map"></div><div class="card fallback" id="mapfb"><b>Map needs a connection.</b><div class="sub">Stops in order:</div><div id="fblist"></div></div><p class="sub" style="padding:0 4px">Solid line: driving. Dashed: Interislander ferry. Tap a pin for dates and stay.</p></section>
 <section class="view" id="v-check"><h2>Checklist</h2><div class="card"><div><b id="left"></b></div><div class="bar"><i id="prog"></i></div><div id="ticks"></div><button class="btn ghost sm" id="clr" style="margin-top:10px">Clear ticks</button><div class="sub" style="margin-top:8px">Saved on this phone.</div></div>
@@ -78,7 +96,7 @@ nav button i{font-style:normal;font-size:22px;transition:transform .2s}nav butto
 <label class="f">Hobbiton booking ref<input class="t" data-r="hobbiton"></label>
 <label class="f">Airbnb codes<textarea rows="3" data-r="airbnb"></textarea></label>
 <label class="f">Car rego<input class="t" data-r="rego" autocapitalize="characters"></label>
-<label class="f">Other notes<textarea rows="4" data-r="notes"></textarea></label><div class="sub" id="saved" style="margin-top:8px"></div></div></section>
+<label class="f">Other notes<textarea rows="4" data-r="notes"></textarea></label><div class="sub" id="saved" style="margin-top:8px"></div></div><h2>About & photo credits</h2><div class="card cred" id="credits">Photos from Wikimedia Commons under free licences, resized to WebP.</div></section>
 </main>
 <nav><button class="on" data-v="timeline"><i>🗓️</i>Timeline</button><button data-v="bookings"><i>🎫</i>Bookings</button><button data-v="map"><i>🗺️</i>Map</button><button data-v="check"><i>✅</i>Checklist</button><button data-v="money"><i>💰</i>Money</button><button data-v="refs"><i>🔑</i>Refs</button></nav>
 <script src="data.js"></script><script src="leaflet.js"></script><script src="money.js"></script><script src="eat.js"></script>
@@ -88,13 +106,24 @@ const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){re
 const n=new Date(),p=x=>String(x).padStart(2,"0"),today=n.getFullYear()+"-"+p(n.getMonth()+1)+"-"+p(n.getDate());
 const td=DAYS.find(d=>d.d===today),nx=td||DAYS.find(d=>d.d>today);
 const TAG={book:["Booked","b"],todo:["To book","t"]};
-function actCard(id){const a=ACT[id];const no=/NOT OK/.test(a.k),yes=/OK for Mahnisa|Kid-friendly/.test(a.k)&&!no;return `<div class="act"><h4>${esc(a.t)}</h4><p>${esc(a.d)}</p><div class="kv"><span>Hours:</span> ${esc(a.h)} · <span>Price:</span> ${esc(a.p)} · <span>Time:</span> ${esc(a.u)}</div><div class="kid ${no?"no":yes?"yes":""}">👧 ${esc(a.k)}</div><div class="row">${a.w?`<a class="btn sm" href="${a.w}" target="_blank" rel="noopener">Website</a>`:""}${a.m?`<a class="btn ghost sm" href="${G(a.m)}" target="_blank" rel="noopener">Maps</a>`:""}</div></div>`}
+function actCard(id){const a=ACT[id];const no=/NOT OK/.test(a.k),yes=/OK for Mahnisa|Kid-friendly/.test(a.k)&&!no;return `<div class="act"><img class="ph" loading="lazy" decoding="async" src="img/${id}.webp" alt="" onerror="this.remove()"><h4>${esc(a.t)}</h4><p>${esc(a.d)}</p><div class="kv"><span>Hours:</span> ${esc(a.h)} · <span>Price:</span> ${esc(a.p)} · <span>Time:</span> ${esc(a.u)}</div><div class="kid ${no?"no":yes?"yes":""}">👧 ${esc(a.k)}</div><div class="row">${a.w?`<a class="btn sm" href="${a.w}" target="_blank" rel="noopener">Website</a>`:""}${a.m?`<a class="btn ghost sm" href="${G(a.m)}" target="_blank" rel="noopener">Maps</a>`:""}</div></div>`}
 function legHtml(l){const u=l[2]?DIR3(l[0],l[2],l[1]):DIR(l[0],l[1]);return `<div class="leg"><div><b>🚗 ${l[0]} → ${l[2]?l[2].split(",")[0]+" → ":""}${l[1]}</b><div class="sub">${l[3]} · ${l[4]} driving</div></div><a class="btn sm" href="${u}" target="_blank" rel="noopener">Directions</a></div>`}
+const DIMG={"2026-11-13":"akl","2026-11-14":"akl","2026-11-15":"sky","2026-11-16":"hob","2026-11-17":"luge","2026-11-18":"desert","2026-11-19":"pic","2026-11-20":"kai","2026-11-21":"pukaki","2026-11-22":"zqn","2026-11-23":"glen","2026-11-24":"chc","2026-11-25":"pic","2026-11-26":"wlg","2026-11-27":"tpo","2026-11-28":"akl","2026-11-29":"akl"};
 const IC={go:"🚶",drive:"🚗",book:"🎫",act:"⭐",meal:"🍽️",home:"🏡",free:"☀️",ferry:"⛴️",todo:"🛏️"};
 function dayBody(d){return `${d.rem?`<div class="rem">⏰ ${esc(d.rem)}</div>`:""}<div class="sched">${d.ev.map(e=>{const t=TAG[e[2]];return `<div class="sl k-${e[2]}"><div class="tm">${esc(e[0])}</div><div class="ln"><i>${IC[e[2]]||"•"}</i></div><div class="tx">${esc(e[1])}${t?` <span class="tg ${t[1]}">${t[0]}</span>`:""}${e[3]&&e[2]==="act"?`<details class="ad"><summary>Details & links</summary>${actCard(e[3])}</details>`:""}</div></div>`}).join("")}</div>${d.leg?legHtml(d.leg):""}${(EAT[d.d]||[]).length?`<div class="eat"><h4>🍽️ Where to eat</h4>${EAT[d.d].map(r=>`<div class="er"><div><b>${esc(r.n)}</b> <span class="sub">· ${esc(r.cu)}</span><div class="sub">${esc(r.note)}</div><span class="tg ${/^yes/.test(r.h)?"b":/^partly/.test(r.h)?"t":"u"}">Halal: ${esc(r.h)}</span></div><div class="row"><a class="btn ghost sm" href="${r.m}" target="_blank" rel="noopener">Maps</a>${r.w?`<a class="btn ghost sm" href="${r.w}" target="_blank" rel="noopener">Web</a>`:""}</div></div>`).join("")}<div class="sub">Halal status from directories; always confirm with the restaurant.</div></div>`:""}`}
 $("#today").innerHTML=td?`<div class="card today"><span class="tag">TODAY</span><h3 style="margin:8px 0 2px">${esc(td.p)}</h3><div class="sub">${esc(td.l)}</div>${dayBody(td)}</div>`:(()=>{const s=new Date("2026-11-13T00:00"),dd=Math.ceil((s-n)/864e5);return `<div class="card"><b>${today<"2026-11-13"?dd+" days to go":"Trip complete"}</b><div class="sub">${today<"2026-11-13"?"Starts Fri 13 Nov · NZ126 departs Melbourne 7:10pm":"Home on 29 Nov"}</div><div class="stats"><div class="stat"><b>16</b><span>nights</span></div><div class="stat"><b>~2,950</b><span>km driving</span></div><div class="stat"><b>2</b><span>ferry crossings</span></div></div></div>`})();
-$("#days").innerHTML=DAYS.map((d,i)=>{const now=d===td,op=d===nx;return `<div class="day ${now?"now ":""}${op?"open":""}" data-i="${i}"><span class="dot"></span><div class="card"><div class="dh"><div><h3>${now?"Today · ":op?"Next · ":""}${esc(d.p)}</h3><div class="sub">${esc(d.l)}${d.leg?` · 🚗 ${d.leg[3]} · ${d.leg[4]}`:""} · starts ${esc(d.ev[0][0])}</div></div><span class="chev">›</span></div><div class="body"><div>${dayBody(d)}</div></div></div></div>`}).join("");
-document.querySelectorAll(".dh").forEach(h=>h.onclick=()=>h.closest(".day").classList.toggle("open"));
+$("#days").innerHTML=DAYS.map((d,i)=>{const now=d===td,op=d===nx;return `<div class="day ${now?"now ":""}${op?"open":""}" data-i="${i}"><span class="dot"></span><div class="card"><img class="dimg" loading="lazy" decoding="async" src="img/${DIMG[d.d]}.webp" alt="" onerror="this.remove()"><div class="dh"><div><h3>${now?"Today · ":op?"Next · ":""}${esc(d.p)}</h3><div class="sub">${esc(d.l)}${d.leg?` · 🚗 ${d.leg[3]} · ${d.leg[4]}`:""} · starts ${esc(d.ev[0][0])}</div></div><span class="chev">›</span></div><div class="body"><div>${dayBody(d)}</div></div></div></div>`}).join("");
+const WIDE=matchMedia("(min-width:840px)");let selI=DAYS.indexOf(nx);if(selI<0)selI=0;let pmap,pmk=[];
+function renderPane(){const d=DAYS[selI];document.querySelectorAll(".day").forEach(x=>x.classList.toggle("sel",+x.dataset.i===selI));if(!WIDE.matches)return;
+$("#pane").innerHTML=`<img class="dimg" style="height:200px" src="img/${DIMG[d.d]}.webp" alt=""><h3 style="margin:0">${esc(d.p)}</h3><div class="sub">${esc(d.l)}</div>${dayBody(d)}<div id="pmap"></div>`;
+if(window.L&&navigator.onLine!==false){pmap&&pmap.remove();pmap=L.map("pmap",{zoomControl:false,attributionControl:true});L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{attribution:"© OpenStreetMap"}).addTo(pmap);
+const pts=STOPS.map(s=>s.ll);L.polyline(pts,{color:"#0f766e",weight:3,opacity:.6}).addTo(pmap);
+const near=STOPS.filter(s=>(d.leg||[]).concat([d.p]).join(" ").toLowerCase().includes(s.name.split(/[ \/(]/)[0].toLowerCase()));
+STOPS.forEach(s=>L.circleMarker(s.ll,{radius:near.includes(s)?9:5,color:"#fff",weight:2,fillColor:near.includes(s)?"#e11d48":"#0f766e",fillOpacity:1}).addTo(pmap).bindTooltip(s.name));
+near.length?pmap.fitBounds(near.map(s=>s.ll).concat(near.length<2?[[near[0].ll[0]+.3,near[0].ll[1]+.3],[near[0].ll[0]-.3,near[0].ll[1]-.3]]:[]),{padding:[30,30]}):pmap.fitBounds(pts)}}
+document.querySelectorAll(".dh").forEach(h=>h.onclick=()=>{const day=h.closest(".day");if(WIDE.matches){selI=+day.dataset.i;renderPane();$("#pane").scrollTop=0}else day.classList.toggle("open")});
+WIDE.addEventListener("change",renderPane);addEventListener("resize",()=>{if(pmap&&WIDE.matches)pmap.invalidateSize();if(typeof map!=="undefined"&&map)map.invalidateSize()});renderPane();
+fetch("img/credits.json").then(r=>r.json()).then(c=>{$("#credits").innerHTML="Photos from Wikimedia Commons under free licences, resized to WebP and stored in the app for offline use.<br><br>"+Object.entries(c).map(([k,v])=>`<div>${k}: <a href="${v.src}" target="_blank" rel="noopener">${esc(v.file.replace("File:",""))}</a> · ${esc(v.author)} · ${esc(v.license)}</div>`).join("")+"<br>Map data © OpenStreetMap contributors. Leaflet (BSD-2)."}).catch(()=>{});
 $("#books").innerHTML=BOOK.map(b=>`<div class="bk ${b.k}"><div class="top"><span class="ic">${b.ic}</span><span class="pill">${esc(b.s)}</span></div><h3>${esc(b.t)}</h3><ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join("")}</ul><div class="row">${b.btn.map((x,j)=>`<a class="btn ${j?"ghost":""} ${j?"":"full"}" href="${x[1]}" target="_blank" rel="noopener">${x[0]}</a>`).join("")}</div></div>`).join("");
 function rt(){const s=Object.assign(Object.fromEntries(TODO.filter(t=>t[2]).map(t=>[t[0],true])),ls.get("nz-check",{})),left=TODO.filter(([k])=>!s[k]).length;$("#ticks").innerHTML=TODO.map(([k,t])=>`<label class="tick ${s[k]?"done":""}"><input type="checkbox" data-k="${k}" ${s[k]?"checked":""}><span>${t}</span></label>`).join("");$("#left").textContent=left?left+" of "+TODO.length+" left":"All done 🎉";$("#prog").style.width=(100*(TODO.length-left)/TODO.length)+"%"}
 $("#ticks").addEventListener("change",e=>{const s=Object.assign(Object.fromEntries(TODO.filter(t=>t[2]).map(t=>[t[0],true])),ls.get("nz-check",{}));s[e.target.dataset.k]=e.target.checked;ls.set("nz-check",s);rt()});$("#clr").onclick=()=>{ls.set("nz-check",{});rt()};rt();
